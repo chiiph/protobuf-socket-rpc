@@ -95,7 +95,8 @@ class SocketHandler(SocketServer.StreamRequestHandler):
 
         # Send reply to client
         self.wfile.write(rpcResponse.SerializeToString())
-        self.request.shutdown(socket.SHUT_RDWR)
+        self.request.shutdown(socket.SHUT_WR)
+        self.request.close()
 
     def validateAndExecuteRequest(self, input):
         '''Match a client request to the corresponding service and method on
